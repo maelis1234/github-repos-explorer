@@ -47,11 +47,12 @@ describe('Repository Detail Page', () => {
   it('should display all repository information', () => {
     cy.get('h2').should('contain', testRepo)
     cy.get('p').should('contain', 'GitHub Actions for interacting with Docker')
-    cy.get('p').should('contain', 'Starred by 15 people')
-    cy.get('p').should('contain', 'Forked by 8 people')
-    cy.get('p').should('contain', 'Created on 20/06/2019')
-    cy.get('p').should('contain', 'Updated on 11/12/2024')
-    cy.get('p').should('contain', 'Ruby')
+    cy.contains('span', 'Starred by 15 devs').should('exist')
+    cy.contains('span', '8 forks').should('exist')
+    cy.contains('span', '1 follower').should('exist')
+    cy.contains('span', 'Created on 20/06/2019').should('exist')
+    cy.contains('span', 'Updated on 11/12/2024').should('exist')
+    cy.contains('span', 'Ruby').should('exist')
 
     cy.get('a[href*="github.com"]')
       .should('contain', 'View on GitHub')
