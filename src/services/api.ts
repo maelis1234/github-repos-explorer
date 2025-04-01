@@ -1,4 +1,4 @@
-import { handleFetchError } from '../utils/errors'
+import { formatRepositoryData, handleFetchError } from '../utils/api.utils'
 import { Repository } from '../utils/types'
 
 const API_GITHUB_URL = 'https://api.github.com'
@@ -19,22 +19,7 @@ const getRepositoriesByUsername = async (
 
   const data = await response.json()
 
-  return data.map((repo: Repository) => ({
-    id: repo.id,
-    name: repo.name,
-    description: repo.description,
-    created_at: repo.created_at,
-    updated_at: repo.updated_at,
-    language: repo.language,
-    stargazers_count: repo.stargazers_count,
-    forks_count: repo.forks_count,
-    html_url: repo.html_url,
-    owner: {
-      login: repo.owner.login,
-      avatar_url: repo.owner.avatar_url,
-      html_url: repo.owner.html_url,
-    },
-  }))
+  return data.map((repos: Repository) => formatRepositoryData(repos))
 }
 
 const getRepositoryDetail = async (
@@ -52,22 +37,7 @@ const getRepositoryDetail = async (
 
   const data = await response.json()
 
-  return {
-    id: data.id,
-    name: data.name,
-    description: data.description,
-    created_at: data.created_at,
-    updated_at: data.updated_at,
-    language: data.language,
-    stargazers_count: data.stargazers_count,
-    forks_count: data.forks_count,
-    html_url: data.html_url,
-    owner: {
-      login: data.owner.login,
-      avatar_url: data.owner.avatar_url,
-      html_url: data.owner.html_url,
-    },
-  }
+  return formatRepositoryData(data)
 }
 
 export { getRepositoriesByUsername, getRepositoryDetail }

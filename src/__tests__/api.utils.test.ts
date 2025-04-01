@@ -1,4 +1,4 @@
-import { getErrorMessage, handleFetchError } from '@/utils/errors'
+import { getErrorMessage, handleFetchError } from '@/utils/api.utils'
 
 global.fetch = jest.fn()
 
@@ -26,12 +26,12 @@ describe('Error handling', () => {
       )
     })
 
-    it('returns empty string for unknown status codes', () => {
-      expect(getErrorMessage(401)).toBe('')
-      expect(getErrorMessage(418)).toBe('')
-      expect(getErrorMessage(503)).toBe('')
-      expect(getErrorMessage(0)).toBe('')
-      expect(getErrorMessage(-1)).toBe('')
+    it('returns message for unknown status codes', () => {
+      expect(getErrorMessage(401)).toBe('An unexpected error occured. Please try again later.')
+      expect(getErrorMessage(418)).toBe('An unexpected error occured. Please try again later.')
+      expect(getErrorMessage(503)).toBe('An unexpected error occured. Please try again later.')
+      expect(getErrorMessage(0)).toBe('An unexpected error occured. Please try again later.')
+      expect(getErrorMessage(-1)).toBe('An unexpected error occured. Please try again later.')
     })
   })
 
