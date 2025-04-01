@@ -26,7 +26,7 @@ describe('RepositoryDetailCard Component', () => {
     expect(
       screen.getByText(`Starred by ${mockRepo.stargazers_count} devs`)
     ).toBeInTheDocument()
-     expect(
+    expect(
       screen.getByText(`${mockRepo.subscribers_count} followers`)
     ).toBeInTheDocument()
     expect(

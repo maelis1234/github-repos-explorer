@@ -43,13 +43,15 @@ const SearchRepositories = () => {
     <div className='flex flex-col items-center '>
       <div className='flex space-x-3 m-8'>
         <div>
-          <label htmlFor="searchBar" className="sr-only">Search for a GitHub User</label>
+          <label htmlFor='searchBar' className='sr-only'>
+            Search for a GitHub User
+          </label>
           <input
             id='searchBar'
             name='searchBar'
             type='text'
             placeholder='Search for a Github User...'
-            aria-label="Enter GitHub username to search for repositories"
+            aria-label='Enter GitHub username to search for repositories'
             className='w-48 md:w-72 rounded-md bg-white p-2 text-gray-900 border border-gray-300 placeholder:text-gray-400 placeholder:text-sm shadow-sm'
             onChange={handleChange}
             onKeyDown={(e) => {

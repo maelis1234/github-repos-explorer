@@ -2,27 +2,29 @@ import { Repository } from '@/utils/types'
 import {
   CalendarIcon,
   ClockIcon,
+  CodeBracketSquareIcon,
   CommandLineIcon,
   EyeIcon,
-  CodeBracketSquareIcon,
   StarIcon,
 } from '@heroicons/react/20/solid'
 import Image from 'next/image'
 
 interface RepoInfoProps {
-  icon: React.ElementType,
-  text: string,
+  icon: React.ElementType
+  text: string
 }
 
 interface RepoDetailProps {
   repo: Repository
 }
 
-const RepoInfo = ({icon: Icon, text }: RepoInfoProps) => {
-  return <p className='flex items-center space-x-2'>
-    <Icon className='size-5' />
-    <span className='text-sm md:text-base'>{text}</span>
-  </p>
+const RepoInfo = ({ icon: Icon, text }: RepoInfoProps) => {
+  return (
+    <p className='flex items-center space-x-2'>
+      <Icon className='size-5' />
+      <span className='text-sm md:text-base'>{text}</span>
+    </p>
+  )
 }
 
 const RepositoryDetailCard = ({ repo }: RepoDetailProps) => {
@@ -55,18 +57,41 @@ const RepositoryDetailCard = ({ repo }: RepoDetailProps) => {
 
         <div className='flex justify-around'>
           <div>
-            <RepoInfo icon={CalendarIcon} text={`Created on ${new Date(repo.created_at).toLocaleDateString()}`}/>
-            <RepoInfo icon={ClockIcon} text={`Updated on ${new Date(repo.updated_at).toLocaleDateString()}`}/>
-            <RepoInfo icon={CodeBracketSquareIcon} text={repo.language ?? 'Unknown'} />
+            <RepoInfo
+              icon={CalendarIcon}
+              text={`Created on ${new Date(
+                repo.created_at
+              ).toLocaleDateString()}`}
+            />
+            <RepoInfo
+              icon={ClockIcon}
+              text={`Updated on ${new Date(
+                repo.updated_at
+              ).toLocaleDateString()}`}
+            />
+            <RepoInfo
+              icon={CodeBracketSquareIcon}
+              text={repo.language ?? 'Unknown'}
+            />
           </div>
 
           <div>
-            <RepoInfo icon={CommandLineIcon} text={`${repo.forks_count} 
-                ${repo.forks_count > 1 ? 'forks' : 'fork'}`} />
-            <RepoInfo icon={EyeIcon} text={`${repo.subscribers_count} ${repo.subscribers_count > 1 ? 'followers' : 'follower'}`} />
-            <RepoInfo icon={StarIcon} text={`Starred by ${repo.stargazers_count}
-                ${repo.stargazers_count > 1 ? 'devs' : 'dev'}`} />
-            
+            <RepoInfo
+              icon={CommandLineIcon}
+              text={`${repo.forks_count} 
+                ${repo.forks_count > 1 ? 'forks' : 'fork'}`}
+            />
+            <RepoInfo
+              icon={EyeIcon}
+              text={`${repo.subscribers_count} ${
+                repo.subscribers_count > 1 ? 'followers' : 'follower'
+              }`}
+            />
+            <RepoInfo
+              icon={StarIcon}
+              text={`Starred by ${repo.stargazers_count}
+                ${repo.stargazers_count > 1 ? 'devs' : 'dev'}`}
+            />
           </div>
         </div>
 
