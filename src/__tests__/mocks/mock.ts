@@ -10,6 +10,7 @@ export const MOCK_REPOS: Repository[] = [
     language: 'Typescript',
     stargazers_count: 20,
     forks_count: 10,
+    subscribers_count: 15,
     html_url: 'https://github.com/mock-user/mock-repo',
     owner: {
       login: 'mock-user',
@@ -26,6 +27,7 @@ export const MOCK_REPOS: Repository[] = [
     language: 'Typescript',
     stargazers_count: 60,
     forks_count: 40,
+    subscribers_count: 15,
     html_url: 'https://github.com/mock-user/mock-repo-2',
     owner: {
       login: 'mock-user',

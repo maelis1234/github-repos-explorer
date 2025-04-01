@@ -24,10 +24,13 @@ describe('RepositoryDetailCard Component', () => {
 
     expect(screen.getByText(mockRepo.language ?? '')).toBeInTheDocument()
     expect(
-      screen.getByText(`Starred by ${mockRepo.stargazers_count} people`)
+      screen.getByText(`Starred by ${mockRepo.stargazers_count} devs`)
+    ).toBeInTheDocument()
+     expect(
+      screen.getByText(`${mockRepo.subscribers_count} followers`)
     ).toBeInTheDocument()
     expect(
-      screen.getByText(`Forked by ${mockRepo.forks_count} people`)
+      screen.getByText(`${mockRepo.forks_count} forks`)
     ).toBeInTheDocument()
     expect(
       screen.getByRole('link', { name: 'View on GitHub' })

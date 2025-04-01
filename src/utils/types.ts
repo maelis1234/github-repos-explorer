@@ -8,6 +8,7 @@ export interface Repository {
   stargazers_count: number
   forks_count: number
   html_url: string
+  subscribers_count: number
   owner: Owner
 }
 
