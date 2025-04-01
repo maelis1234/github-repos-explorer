@@ -41,7 +41,7 @@ const SearchRepositories = () => {
 
   return (
     <div className='flex flex-col items-center '>
-      <div className='flex flex-row space-x-3 m-8'>
+      <div className='flex space-x-3 m-8'>
         <div>
           <label htmlFor="searchBar" className="sr-only">Search for a GitHub User</label>
           <input

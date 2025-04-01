@@ -27,7 +27,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <header className='bg-black text-white p-4'>
+        <header className='p-4 bg-black text-white'>
           <h1 className='text-xl font-bold'>GitHub Repos Explorer</h1>
         </header>
         <main className='flex items-center justify-center'>{children}</main>
