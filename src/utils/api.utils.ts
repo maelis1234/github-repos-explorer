@@ -9,7 +9,7 @@ const getErrorMessage = (status: number) => {
       break
     case 404:
       message =
-        'User not found. Please check the GitHub username and try again.'
+        'Resource not found. Please check the GitHub informations and try again.'
       break
     case 500:
       message = 'GitHub server error. Please try again later.'

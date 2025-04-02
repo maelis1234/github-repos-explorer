@@ -5,7 +5,7 @@ import { MOCK_REPOS } from './mocks/mock'
 describe('RepositoryDetailCard Component', () => {
   const mockRepo = MOCK_REPOS[0]
 
-  it('should render with the provided repository', () => {
+  it('renders with the provided repository', () => {
     render(<RepositoryDetailCard repo={mockRepo} />)
 
     expect(screen.getByText(mockRepo.name)).toBeInTheDocument()

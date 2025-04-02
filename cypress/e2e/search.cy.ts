@@ -3,7 +3,7 @@ describe('Search Page', () => {
     cy.visit('/')
   })
 
-  it('should search for GitHub repos and redirect to detail page', () => {
+  it('searches for GitHub repos and redirect to detail page', () => {
     cy.get('h1').should('contain', 'GitHub Repos Explorer')
     cy.get('input[placeholder="Search for a Github User..."]').type(
       'vercel{enter}'
@@ -12,7 +12,7 @@ describe('Search Page', () => {
     cy.url().should('include', '/vercel/actions')
   })
 
-  it('should display error for non-existent user', () => {
+  it('displays error for non-existent user', () => {
     const nonExistentUser = 'this-user-does-not-exist-12345'
 
     cy.get('input[placeholder="Search for a Github User..."]').type(
@@ -21,18 +21,35 @@ describe('Search Page', () => {
 
     cy.contains('Loading...').should('exist')
     cy.contains(
-      'User not found. Please check the GitHub username and try again.',
+      'Resource not found. Please check the GitHub informations and try again.',
       { timeout: 10000 }
     ).should('be.visible')
   })
 
-  it('should display message for user with no public repos', () => {
+  it('displays message for user with no public repos', () => {
     const userWithNoRepos = 'maelis123'
 
     cy.get('input').type(`${userWithNoRepos}{enter}`)
     cy.contains('This user has no public repos.', { timeout: 10000 }).should(
       'be.visible'
     )
+  })
+
+  it('handles server error', () => {
+    cy.intercept('GET', 'https://api.github.com/users/*/repos', {
+      statusCode: 500,
+      body: { message: 'Internal Server Error' },
+    }).as('serverError')
+
+    cy.get('input[placeholder="Search for a Github User..."]').type(
+      'vercel{enter}'
+    )
+
+    cy.wait('@serverError')
+
+    cy.contains('GitHub server error. Please try again later.', {
+      timeout: 10000,
+    }).should('be.visible')
   })
 })
 
@@ -44,7 +61,7 @@ describe('Repository Detail Page', () => {
     cy.visit(`/${testUser}/${testRepo}`)
   })
 
-  it('should display all repository information', () => {
+  it('displays all repository information', () => {
     cy.get('h2').should('contain', testRepo)
     cy.get('p').should('contain', 'GitHub Actions for interacting with Docker')
     cy.contains('span', 'Starred by 15 devs').should('exist')
@@ -59,8 +76,33 @@ describe('Repository Detail Page', () => {
       .and('have.attr', 'target', '_blank')
   })
 
-  it('should have a working back link', () => {
+  it('has a working back link', () => {
     cy.get('a').contains('Back').click()
+    cy.url().should('eq', Cypress.config().baseUrl + '/')
+  })
+
+  it('handles server error', () => {
+    const invalidUser = 'invalid-user'
+    const invalidRepo = 'invalid-repo'
+    cy.intercept(
+      'GET',
+      `https://api.github.com/repos/${invalidUser}/${invalidRepo}`,
+      {
+        statusCode: 500,
+        body: { message: 'Internal Server Error' },
+      }
+    )
+
+    cy.visit(`/${invalidUser}/${invalidRepo}`, { failOnStatusCode: false })
+
+    cy.contains(
+      'Resource not found. Please check the GitHub informations and try again.',
+      {
+        timeout: 10000,
+      }
+    ).should('be.visible')
+
+    cy.get('a').contains('Back to Search Page').click()
     cy.url().should('eq', Cypress.config().baseUrl + '/')
   })
 })

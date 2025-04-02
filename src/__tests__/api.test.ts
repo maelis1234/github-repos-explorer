@@ -31,22 +31,47 @@ describe('GitHub API calls', () => {
       )
     })
 
-    it('throws error for failed fetch', async () => {
+    it('throws error for 403 Forbidden request', async () => {
+      ;(fetch as jest.Mock).mockResolvedValue({
+        ok: false,
+        status: 403,
+      })
+
+      await expect(getRepositoriesByUsername('test-user')).rejects.toThrow(
+        'Too many requests. Forbidden request. Please try again later or add an authentication token.'
+      )
+    })
+
+    it('throws error for 404 Not Found', async () => {
       ;(fetch as jest.Mock).mockResolvedValue({
         ok: false,
         status: 404,
       })
 
       await expect(getRepositoriesByUsername('unknown-user')).rejects.toThrow(
-        'User not found. Please check the GitHub username and try again.'
+        'Resource not found. Please check the GitHub informations and try again.'
       )
     })
 
-    it('handles network errors', async () => {
-      ;(fetch as jest.Mock).mockRejectedValue(new Error('Network error'))
+    it('throws error for 500 Server Error', async () => {
+      ;(fetch as jest.Mock).mockResolvedValue({
+        ok: false,
+        status: 500,
+      })
 
       await expect(getRepositoriesByUsername('test-user')).rejects.toThrow(
-        'Network error'
+        'GitHub server error. Please try again later.'
+      )
+    })
+
+    it('throws generic error for unexpected error', async () => {
+      ;(fetch as jest.Mock).mockResolvedValue({
+        ok: false,
+        status: 418,
+      })
+
+      await expect(getRepositoriesByUsername('mock-user')).rejects.toThrow(
+        'An unexpected error occured. Please try again later.'
       )
     })
   })
@@ -71,7 +96,7 @@ describe('GitHub API calls', () => {
       )
     })
 
-    it('throws error for failed fetch', async () => {
+    it('throws error for 403 Forbidden request', async () => {
       ;(fetch as jest.Mock).mockResolvedValue({
         ok: false,
         status: 403,
@@ -84,12 +109,39 @@ describe('GitHub API calls', () => {
       )
     })
 
-    it('handles network errors', async () => {
-      ;(fetch as jest.Mock).mockRejectedValue(new Error('Network error'))
+    it('throws error for 404 Not Found', async () => {
+      ;(fetch as jest.Mock).mockResolvedValue({
+        ok: false,
+        status: 404,
+      })
+
+      await expect(
+        getRepositoryDetail('unknown-user', 'unknown-repo')
+      ).rejects.toThrow(
+        'Resource not found. Please check the GitHub informations and try again.'
+      )
+    })
+
+    it('throws error for 500 Server Error', async () => {
+      ;(fetch as jest.Mock).mockResolvedValue({
+        ok: false,
+        status: 500,
+      })
+
+      await expect(
+        getRepositoryDetail('test-user', 'server-error')
+      ).rejects.toThrow('GitHub server error. Please try again later.')
+    })
+
+    it('throws generic error for unexpected error', async () => {
+      ;(fetch as jest.Mock).mockResolvedValue({
+        ok: false,
+        status: 418,
+      })
 
       await expect(
         getRepositoryDetail('mock-user', 'mock-repo')
-      ).rejects.toThrow('Network error')
+      ).rejects.toThrow('An unexpected error occured. Please try again later.')
     })
   })
 })

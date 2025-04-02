@@ -16,7 +16,7 @@ describe('Error handling', () => {
 
     it('returns message for 404 status', () => {
       expect(getErrorMessage(404)).toBe(
-        'User not found. Please check the GitHub username and try again.'
+        'Resource not found. Please check the GitHub informations and try again.'
       )
     })
 
@@ -27,11 +27,21 @@ describe('Error handling', () => {
     })
 
     it('returns message for unknown status codes', () => {
-      expect(getErrorMessage(401)).toBe('An unexpected error occured. Please try again later.')
-      expect(getErrorMessage(418)).toBe('An unexpected error occured. Please try again later.')
-      expect(getErrorMessage(503)).toBe('An unexpected error occured. Please try again later.')
-      expect(getErrorMessage(0)).toBe('An unexpected error occured. Please try again later.')
-      expect(getErrorMessage(-1)).toBe('An unexpected error occured. Please try again later.')
+      expect(getErrorMessage(401)).toBe(
+        'An unexpected error occured. Please try again later.'
+      )
+      expect(getErrorMessage(418)).toBe(
+        'An unexpected error occured. Please try again later.'
+      )
+      expect(getErrorMessage(503)).toBe(
+        'An unexpected error occured. Please try again later.'
+      )
+      expect(getErrorMessage(0)).toBe(
+        'An unexpected error occured. Please try again later.'
+      )
+      expect(getErrorMessage(-1)).toBe(
+        'An unexpected error occured. Please try again later.'
+      )
     })
   })
 
@@ -51,7 +61,7 @@ describe('Error handling', () => {
     it('throws 404 error', () => {
       const mockResponse = { ok: false, status: 404 }
       expect(() => handleFetchError(mockResponse as Response)).toThrow(
-        'User not found. Please check the GitHub username and try again.'
+        'Resource not found. Please check the GitHub informations and try again.'
       )
     })
 
